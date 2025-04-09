@@ -13,12 +13,18 @@ import Customer_acc from './component/customer_acc';
 import Admindashboard from './component/admindashboard';
 import Inventory from './component/inventory';
 import Admincomplaints from './component/complaints';
+import AddProduct from './component/addprod';
 
 const apiUrl = 'http://localhost/web2FinalProject/backend/api.php?action=';
 
 function AppRoutes() {
   const { username, stat } = useContext(UserContext);
   const [data, setData] = useState([]);
+  const date = new Date();
+
+  const currentDate = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+  const currentTime = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+  const currentDateTime = `${currentDate} ${currentTime}`;
 
   useEffect(() => {
     fetchData();
@@ -45,11 +51,11 @@ function AppRoutes() {
             <Route path="admin" element={<Admin data={apiUrl} />}>
               <Route index element={<Admindashboard data={apiUrl}/>} />
               <Route path="customer_acc" element={<Customer_acc data={apiUrl} />} />
-              <Route path="inventory" element={<Inventory api={apiUrl} />} />
+              <Route path="inventory" element={<Inventory api={apiUrl} date={currentDateTime}/>} />
               <Route path="complaints" element={<Admincomplaints data={apiUrl} />} />
             </Route>
               <Route path=":username" element={<Client data={apiUrl}/>} />  
-            <Route path="logout" element={<Navigate to="/" replace />} />
+              <Route path="logout" element={<Navigate to="/" replace />} />
           </Route>
         </Routes>
       </BrowserRouter>
