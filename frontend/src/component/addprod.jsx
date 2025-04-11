@@ -8,6 +8,7 @@ function AddProduct({api, isBtn, setIsBtn, date}) {
 
   const [productName, setProductName] = useState('');
   const [description, setDescription] = useState('');
+  const [img, setImg] = useState('');
   const [category, setCategory] = useState('');
   const [qty, setQty] = useState('');
   const [unitPrice, setUnitPrice] = useState('');
@@ -30,6 +31,7 @@ function AddProduct({api, isBtn, setIsBtn, date}) {
       productName: productName,
       description: description,
       category: category,
+      img: img,
       qty: qty,
       unitPrice: unitPrice,
       dateAdded: date
@@ -100,7 +102,17 @@ function AddProduct({api, isBtn, setIsBtn, date}) {
                     onChange={(e) => {setProductName(e.target.value)}}
                     required/>
           </div>
-          <div className='w-[90%] flex flex-col items-start mt-2'>
+          <div className='w-[90%] flex flex-row items-center mt-2'>
+            <label className='w-[20%]'>Upload Img : </label>
+            <input  type="file" 
+                    name="img"
+                    accept="image/*"
+                    onChange={(e) => {setImg(e.target.files[0])}}
+                    required
+                    className='border w-[40%] ml-2 text-none'
+                    />
+          </div>
+          <div className='w-[90%] flex flex-col items-start mt-1'>
             <label htmlFor="">Description:</label>
             <textarea 
                       rows="4" 
@@ -140,7 +152,7 @@ function AddProduct({api, isBtn, setIsBtn, date}) {
                     onChange={(e) => {setUnitPrice(e.target.value)}}
                    required/>
           </div>
-          <div className='w-[90%] flex flex-row justify-evenly items-center mt-5'>
+          <div className='w-[90%] flex flex-row justify-evenly items-center mt-1'>
             <button className='border px-10 py-2 bg-orange-300 rounded-lg'>CLEAR</button>
             <button className='border px-12 py-2 bg-green-300 rounded-lg' onClick={addProduct}>ADD</button>
           </div>

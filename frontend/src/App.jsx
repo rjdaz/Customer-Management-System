@@ -13,7 +13,6 @@ import Customer_acc from './component/customer_acc';
 import Admindashboard from './component/admindashboard';
 import Inventory from './component/inventory';
 import Admincomplaints from './component/complaints';
-import AddProduct from './component/addprod';
 
 const apiUrl = 'http://localhost/web2FinalProject/backend/api.php?action=';
 
@@ -56,6 +55,7 @@ function AppRoutes() {
             </Route>
               <Route path=":username" element={<Client data={apiUrl}/>} />  
               <Route path="logout" element={<Navigate to="/" replace />} />
+
           </Route>
         </Routes>
       </BrowserRouter>

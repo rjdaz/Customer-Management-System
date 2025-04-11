@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { UserContext } from '../context/userContext';
 
-function CustomerLogin({data}) {
+function CustomerLogin({data, isCustomer, isRegister}) {
   const { setUsername, setStat } = useContext(UserContext);
   const [customerUsername, setCustomerUsername] = useState('');
   const [customerPassword, setCustomerPassword] = useState('');
@@ -13,8 +13,8 @@ function CustomerLogin({data}) {
   const handleSubmitCustomer = async (e) => {
     e.preventDefault();
       try {
-        const url = `${data}customerlogin`; // Construct the full URL
-        console.log('Customer Login URL:', url); // Debugging: Log the URL
+        const url = `${data}customerlogin`;
+        console.log('Customer Login URL:', url);
         const response = await axios.post(url, {
           username: customerUsername,
           password: customerPassword,
@@ -29,21 +29,22 @@ function CustomerLogin({data}) {
           alert(response.data.error);
         }
       } catch (error) {
-        console.error('Error in Customer Login:', error); // Debugging: Log the error
+        console.error('Error in Customer Login:', error);
         alert('An error occurred while logging in. Please try again.');
       }
   };
 
+  console.log(isCustomer);
   return (
-    <section className='absolute w-full h-full flex flex-col justify-center items-center '> 
-      <form onSubmit={handleSubmitCustomer} className='w-full bg-yellow-300 flex flex-col justify-center items-center z-[-1] h-[70%]'>
+    <section className={`absolute w-full h-full flex flex-col justify-center items-center ${isCustomer ? 'block' : 'hidden'}`}> 
+      <form onSubmit={handleSubmitCustomer} className='w-full flex flex-col justify-center items-center h-[70%]'>
         <input
           type="text" 
           name="username" 
           placeholder='Username' 
           value={customerUsername}
           onChange={(e) => setCustomerUsername(e.target.value)}
-          className='w-[50%] p-2'
+          className='w-[60%] p-2 border'
           /><br />
         <input 
           type="password"
@@ -51,15 +52,17 @@ function CustomerLogin({data}) {
           value={customerPassword}
           onChange={(e) => setCustomerPassword(e.target.value)}
           placeholder='Password'
-          className='w-[50%] p-2'
+          className='w-[60%] p-2 border'
           /> <br />
-        <button type='submit' className='w-[50%] border'>Log In</button>
+        <button type='submit' className='w-[60%] border p-2  mt-10 cursor-pointer'>Log In</button>
       </form>
-      <div className='w-full h-[20%]'>
-      <a href="">CREATE NEW ACCOUNT</a>
+      <div className='w-full h-[20%] flex flex-col justify-start items-center bg-blue-400'>
+        <button onClick={() => isRegister(true)}
+           className='w-[60%] border p-2 bg-blue-200 flex justify-center items-center'>
+            CREATE NEW ACCOUNT</button>
       </div>
-      <div className='w-full h-[10%]'>
-        <a href="">help?</a>
+      <div className='w-full h-[10%] flex flex-row justify-between items-center bg-red-300 px-2'>
+        <a href="">Help?</a>
         <a href="">Forgot Password?</a>
       </div>
     </section>

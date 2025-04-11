@@ -1,10 +1,12 @@
 import React from 'react';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useContext } from 'react';
 import axios from 'axios';
 import Adding from './addprod';
-
+import ConfirmedCode from './confirmed/confirmedCode';
+import { UserContext } from '../context/userContext';
 
 function Inventory({api, date}) {
+  const { isAdminCode } = useContext(UserContext);
   const [addBtn, setAddBtn] = useState(false);
   const [inventoryData, setInventoryData] = useState([]);
   const inventData = useRef([]);
@@ -41,7 +43,7 @@ function Inventory({api, date}) {
           </button>
         </div>
         <div className='w-[50%] flex flex-row justify-end items-center'> 
-          <input type="search" className='border m-4 rounded-md w-[50%]' />
+          <input type="search" className='border m-4 rounded-md w-[50%] px-3 py-1' />
         </div>
       </div>
   {/* inventory table */}
@@ -66,7 +68,7 @@ function Inventory({api, date}) {
                 inventoryData.map((inv, index) => (
                   <tr key={index} title={`DESCRIPTION: ${(inv.description)}`}>
                     <td className='text-center '>{inv.item_id}</td>
-                    <td className='text-center ' >{inv.item_name}</td>
+                    <td className='text-start px-4' >{inv.item_name}</td>
                     <td className='text-center '>{inv.category_name || 'No Category'}</td>
                     <td className='text-center '>{inv.quantity_in_stock}</td>
                     <td className='text-center '>&#8369;{inv.unit_price.toLocaleString('en-US', { minimumFractionDigits: 2 })}</td>
